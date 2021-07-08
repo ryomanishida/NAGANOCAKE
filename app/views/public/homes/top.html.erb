@@ -1,0 +1,24 @@
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-7" style="background-color: #FFDBC9;">
+        <%=image_tag 'top2.jpg', :size => '620x300' %>
+      </div>
+      <div class="col-5" style="background-color: #FFDBC9;">
+        <p class="top-text">ようこそ、ながのCAKEへ！</br>このサイトは、ケーキ販売のECサイトになります。</br>
+        会員でない方も商品の閲覧はできますが、</br>購入には会員登録が必要になります。</p>
+      </div>
+    </div>
+  </div>
+  <h3>
+   新着商品
+  </h3>
+  <% @item.each do |item|%>
+    <%=link_to item_path(item.id) do%>
+      <%= attachment_image_tag item, :image, size: "220x150" %>
+      <%= item.name%>
+      ￥<%= item.price.to_s(:delimited)%>
+      <%end%>
+  <%end%>
+  <%= link_to '全ての商品を見る', items_path, class:"btn btn-outline-warning"%>
+</main>

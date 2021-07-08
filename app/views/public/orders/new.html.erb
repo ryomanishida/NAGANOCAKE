@@ -1,0 +1,51 @@
+<main>
+  <div class="container">
+    <h3>注文情報入力</h3>
+    <div class="row">
+      <% @sum=0 %>
+      <%@cart_items.each do |cart_item|%>
+      <% @sum += cart_item.amount * cart_item.item.price %>
+      <%end%>
+      <%= form_with model: @order, url: orders_confirm_path, local: true do |f| %>
+      <%= f.hidden_field :total_payment, value: @sum + 800 %>
+        <h4>支払方法</h4>
+        <%= f.radio_button :payment_method, 0 %>
+        <%= f.label :payment_method_クレジットカード, "クレジットカード", {value: :クレジットカード, style: "display: inline-block;"} %>
+        <%= f.radio_button :payment_method, 1 %>
+        <%= f.label :payment_method_銀行振込, "銀行振込", {value: :銀行振込, style: "display: inline-block;"} %>
+
+
+        <h4>お届け先</h4>
+        <!--現住所へ-->
+        <div class="col">
+          <%= radio_button_tag("address_selection", "radio1") %>
+          〒
+          <%= label_tag("address_selection_radio1", @current_address)%>
+        </div>
+
+        <!--登録済住所へ-->
+        <div class="col">
+          <%= radio_button_tag("address_selection", "radio2") %>
+          <%= label_tag("address_selection_radio2", "登録住所から選択") %>
+          <%= f.collection_select :address_id, @addresses, :id, :full_address %>
+        </div>
+
+        <!--新規登録住所へ-->
+        <div class="col">
+          <%= radio_button_tag("address_selection", "radio3") %>
+          <%= label_tag("address_selection_radio3", "新しいお届け先") %>
+            <h6>郵便番号(ハイフンなし)</h6>
+            <%= f.text_field :postal_code%>
+            <h6>住所</h6>
+            <%= f.text_field :address%>
+            <h6>宛名</h6>
+            <%= f.text_field :name%>
+        </div>
+
+        <div class="col mt-3 my-2">
+          <%= f.submit '確認画面へ進む', class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</main>
