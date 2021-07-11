@@ -1,51 +1,58 @@
-<h2>会員情報編集</h2>
+<main>
+  <div class="container">
+    <h2>会員情報編集</h2>
+    <% if @customer.errors.any? %>
+      <%= @customer.errors.count %>件のエラーが発生しました
+      <% @customer.errors.full_messages.each do |message| %>
+        <%= message %>
+      <% end %>
+    <% end %>
 
-<%= form_with model:@customer, url:customers_path(current_customer), local:true do |f|%>
-  <table class="table">
-    <tr>
-      <th>
-        <h6>氏名</h6>
-        <%= f.text_field :first_name%><%= f.text_field :last_name%>
-      </th>
-    </tr>
-    <tr>
-      <th>
-        <h6>フリガナ</h6>
-        <%= f.text_field :first_name_kana%><%= f.text_field :last_name_kana%>
-      </th>
-    </tr>
-    <tr>
-      <th>
-        <h6>郵便番号</h6>
-        <%= f.text_field :postal_code%>
-      </th>
-    </tr>
-    <tr>
-      <th>
-        <h6>住所</h6>
-        <%= f.text_field :address%>
-      </th>
-    </tr>
-    <tr>
-      <th>
-        <h6>電話番号</h6>
-        <%= f.text_field :telephone_number%>
-      </th>
-    </tr>
-    <tr>
-      <th>
-        <h6>メールアドレス</h6>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-      </th>
-    </tr>
+    <%= form_with model:@customer, url:customers_path(current_customer), local:true do |f|%>
+      <table>
+        <tr>
+          <th>
+            <h6>氏名</h6>
+            <%= f.text_field :first_name%><%= f.text_field :last_name%>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <h6>フリガナ</h6>
+            <%= f.text_field :first_name_kana%><%= f.text_field :last_name_kana%>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <h6>郵便番号</h6>
+            <%= f.text_field :postal_code%>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <h6>住所</h6>
+            <%= f.text_field :address%>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <h6>電話番号</h6>
+            <%= f.text_field :telephone_number%>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <h6>メールアドレス</h6>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          </th>
+        </tr>
 
-  </table>
+      </table>
 
-  <div class="actions">
-    <%= f.submit "変更内容を保存",class: "btn btn-success" %>
+      <div class="actions">
+        <%= f.submit "変更内容を保存",class: "btn btn-success" %>
+      </div>
+    <% end %>
+    <%=link_to '退会する', customers_unsubscribe_path, class: 'btn btn-danger'%>
   </div>
-<% end %>
-<%=link_to '退会する', customers_unsubscribe_path, class: 'btn btn-danger'%>
-
-
-<%= link_to "Back", :back %>
+</main>

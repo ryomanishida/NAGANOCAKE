@@ -1,35 +1,39 @@
-<h2>マイページ</h2>
-<h3>登録情報</h3>
-<%= link_to '編集する',edit_customers_path, class: "btn btn-success" %>
+<main>
+    <div class="container">
+        <h2>マイページ</h2>
+        <h3>登録情報</h3>
+        <%= link_to '編集する',edit_customers_path, class: "btn btn-success" %>
 
-<table class="table">
-    <tr>
-        <th>氏名</th>
-        <td><%= @customer.first_name%><%= @customer.last_name%></td>
-    </tr>
-    <tr>
-        <th>カナ</th>
-        <td><%= @customer.first_name_kana%><%= @customer.last_name_kana%></td>
-    </tr>
-    <tr>
-        <th>郵便番号</th>
-        <td><%= @customer.postal_code%></td>
-    </tr>
-    <tr>
-        <th>住所</th>
-        <td><%= @customer.address%></td>
-    </tr>
-    <tr>
-        <th>電話番号</th>
-        <td><%= @customer.telephone_number%></td>
-    </tr>
-    <tr>
-        <th>メールアドレス</th>
-        <td><%= @customer.email%></td>
-    </tr>
-</table>
+        <table class="table table-bordered">
+            <tr>
+                <th>氏名</th>
+                <td><%= @customer.first_name%><%= @customer.last_name%></td>
+            </tr>
+            <tr>
+                <th>カナ</th>
+                <td><%= @customer.first_name_kana%><%= @customer.last_name_kana%></td>
+            </tr>
+            <tr>
+                <th>郵便番号</th>
+                <td><%= @customer.postal_code%></td>
+            </tr>
+            <tr>
+                <th>住所</th>
+                <td><%= @customer.address%></td>
+            </tr>
+            <tr>
+                <th>電話番号</th>
+                <td><%= @customer.telephone_number%></td>
+            </tr>
+            <tr>
+                <th>メールアドレス</th>
+                <td><%= @customer.email%></td>
+            </tr>
+        </table>
 
-<h3>配送先</h3>
-<%= link_to '一覧を見る',addresses_path, class: "btn btn-primary" %>
-<h3>注文履歴</h3>
-<%=link_to '一覧を見る',orders_path, class: "btn btn-primary" %>
+        <h3>配送先</h3>
+        <%= link_to '一覧を見る',addresses_path, class: "btn btn-primary" %>
+        <h3>注文履歴</h3>
+        <%=link_to '一覧を見る',orders_path, class: "btn btn-primary" %>
+    </div>
+</main>

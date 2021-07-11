@@ -1,4 +1,6 @@
 class Public::CartItemsController < ApplicationController
+  before_action :authenticate_customer!
+  
   def index
     @cart_items=CartItem.new
     @cart_items=current_customer.cart_items
@@ -9,12 +11,14 @@ class Public::CartItemsController < ApplicationController
     cart_items=current_customer.cart_items
     cart_item=cart_items.find_by(item_id: params[:cart_item][:item_id])
     cart_item.update(cart_item_params)
+    flash[:notice] = "数量を変更しました"
     redirect_to cart_items_path
   end
 
   def destroy
     cart_item=current_customer.cart_items.find(params[:id])
     cart_item.destroy
+    flash[:alert] = "#{cart_item.item.name}を削除しました"
     redirect_to cart_items_path
   end
 
@@ -22,6 +26,7 @@ class Public::CartItemsController < ApplicationController
   def destroy_all
     cart_items=current_customer.cart_items
     cart_items.destroy_all
+    flash[:alert] = "カートの商品を全て削除しました"
     redirect_to cart_items_path
   end
 
@@ -30,21 +35,21 @@ class Public::CartItemsController < ApplicationController
     @cart_item=CartItem.new(cart_item_params)
     @cart_item.customer_id=current_customer.id
     @cart_items=current_customer.cart_items
-    @cart_items.each do |cart_item|
-      if cart_item.item_id == @cart_item.item_id
-        new_amount = cart_item.amount + @cart_item.amount
-        cart_item.update_attribute(:amount, new_amount)
-        @cart_item.delete
+    unless @cart_item.amount.nil? #もし@cart_item.amountが空じゃなければ
+      @cart_items.each do |cart_item| #同一商品をカートに追加した時
+        if cart_item.item_id == @cart_item.item_id
+          new_amount = cart_item.amount + @cart_item.amount
+          cart_item.update_attribute(:amount, new_amount)
+          @cart_item.delete
+        end
       end
-    end
-
-    if @cart_item.save
+      @cart_item.save #通常の時
+      flash[:notice] = "カートに追加しました"
       redirect_to cart_items_path
-    else
+    else #空(個数選択)であれば
       @item=Item.find(params[:cart_item][:item_id])
-      @cart_item = CartItem.new
-      flash[:alert] = "個数を選択してください"
-      render :index
+      flash.now[:alert] = "個数を選択してください"
+      render ("public/items/show")
     end
   end
 

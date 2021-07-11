@@ -1,5 +1,11 @@
 <main>
   <div class="container">
+    <% if @order.errors.any? %>
+      <%= @order.errors.count %>件のエラーが発生しました
+      <% @order.errors.full_messages.each do |message| %>
+        <%= message %>
+      <% end %>
+    <% end %>
     <h3>注文情報入力</h3>
     <div class="row">
       <% @sum=0 %>

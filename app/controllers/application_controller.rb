@@ -1,7 +1,15 @@
 class ApplicationController < ActionController::Base
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-
+#ログイン後の遷移先
+  def after_sign_in_path_for(resource)
+    if customer_signed_in?
+      customers_my_page_path(resource.id)
+    else
+      admin_path
+    end
+  end
 
   protected
 

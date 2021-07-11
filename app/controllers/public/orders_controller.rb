@@ -1,4 +1,6 @@
 class Public::OrdersController < ApplicationController
+  before_action :authenticate_customer!
+
   def new
     @order=Order.new
     @current_address = current_customer.postal_code + current_customer.address + current_customer.first_name + current_customer.last_name
@@ -27,16 +29,14 @@ class Public::OrdersController < ApplicationController
       @order.address = params[:order][:address]
       @order.name = params[:order][:name]
     end
-    # render :new if @order.invalid?
   end
 
   def create
     @order=Order.new(order_params)
     @order.customer_id = current_customer.id
     if @order.save
+      @cart_items = current_customer.cart_items #カートアイテムをorder_detail格納
       redirect_to orders_complete_path
-    #カートアイテムをorder_detail格納 (order_detail_params)はorder_detailの情報を制約かけるわけではないのでいらない
-      @cart_items = current_customer.cart_items
       @cart_items.each do |cart_item|
         @order_detail = OrderDetail.new
         @order_detail.item_id = cart_item.item.id
@@ -45,9 +45,11 @@ class Public::OrdersController < ApplicationController
         @order_detail.amount = cart_item.amount
         @order_detail.save
       end
-    #注文完了後カートをクリア
-      current_customer.cart_items.destroy_all
+      current_customer.cart_items.destroy_all #カートリセット
     else
+      @cart_items = current_customer.cart_items
+      @addresses = current_customer.addresses
+      @current_address = current_customer.postal_code + current_customer.address + current_customer.first_name+current_customer.last_name
       render :new
     end
   end

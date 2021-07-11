@@ -1,24 +1,8 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# NAGANOCAKE
+  ながのケーキ社のECサイト
 
-Things you may want to cover:
+# 作成情報
+  作成者　西田龍馬
+  所属　webキャンプpro
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

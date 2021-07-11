@@ -1,0 +1,10 @@
+.notice {
+  color: white;
+  background-color: #2C7CFF;
+  text-align: center;
+}
+.alert {
+  color: white;
+  background-color: #FF5F17;
+  text-align: center;
+}

@@ -1,24 +1,31 @@
-<h3>ログイン</h3>
-<%= flash[:error] %>
-<p>会員の方はこちらからログイン</p>
-<%= form_with model:@customer,url:customers_sign_in_path,local:true do |f|%>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3>ログイン</h3>
+        <%= flash[:error] %>
+        <p>会員の方はこちらからログイン</p>
+        <%= form_with model:@customer,url:customers_sign_in_path,local:true do |f|%>
 
-  <div class="field">
-    <%= f.label :メールアドレス %><br />
-    <%= f.email_field :email %>
+          <div class="field">
+            <%= f.label :メールアドレス %><br />
+            <%= f.email_field :email %>
+          </div>
+
+          <div class="field">
+            <%= f.label :パスワード %><br />
+            <%= f.password_field :password %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "ログイン", class:"btn btn-primary" %>
+          </div>
+        <% end %>
+
+        <p>会員登録がお済みでない方</p>
+        <%=link_to 'こちら', customers_sign_up_path %>
+        <p>から新規登録を行なってください。</p>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :パスワード %><br />
-    <%= f.password_field :password %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "ログイン", class:"btn btn-primary" %>
-  </div>
-<% end %>
-
-<p>会員登録がお済みでない方</p>
-<%=link_to 'こちら', customers_sign_up_path %>
-<p>から新規登録を行なってください。</p>
-
+</main>
